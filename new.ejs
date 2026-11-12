@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Event</title>
+</head>
+<body>
+  <h1>Create Event</h1>
+  
+  <form action="/events" method="POST">
+    <div>
+      <label>Event Code:</label>
+      <input type="text" name="eventCode" required pattern="^[A-Za-z0-9-]{3,20}$" title="3-20 characters of letters, numbers, or hyphens">
+    </div>
+    
+    <div>
+      <label>Title:</label>
+      <input type="text" name="title" required maxlength="120">
+    </div>
+
+    <div>
+      <label>Category:</label>
+      <select name="category" required>
+        <option value="">Please select...</option>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat %>"><%= cat %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div>
+      <label>Venue:</label>
+      <input type="text" name="venue" required maxlength="120">
+    </div>
+
+    <div>
+      <label>Capacity:</label>
+      <input type="number" name="capacity" required min="1">
+    </div>
+
+    <div>
+      <label>Start At:</label>
+      <input type="datetime-local" name="startAt" required>
+    </div>
+
+    <button type="submit">Submit</button>
+    <a href="/events">Cancel and return to list</a>
+  </form>
+</body>
+</html>

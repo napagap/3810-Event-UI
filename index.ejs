@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Event List</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav>
+    Welcome, <%= name %> | 
+    <a href="/dashboard">Dashboard</a> | 
+    <a href="/events/new">Create Event</a> |
+    <form action="/auth/logout" method="POST" style="display:inline;">
+      <button type="submit">Logout</button>
+    </form>
+  </nav>
+
+  <h1>Event List</h1>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Event Code</th>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Status</th>
+        <th>Start Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (events.length === 0) { %>
+        <tr><td colspan="6">No events available.</td></tr>
+      <% } else { %>
+        <% events.forEach(event => { %>
+          <tr>
+            <td><%= event.eventCode %></td>
+            <td><%= event.title %></td>
+            <td><%= event.category %></td>
+            <td><%= event.status %></td>
+            <td><%= event.startAt ? event.startAt.toLocaleString() : 'Not set' %></td>
+            <td>
+              <a href="/events/<%= event.eventCode %>">View Details</a>
+            </td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>
