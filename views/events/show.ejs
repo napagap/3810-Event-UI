@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Details - <%= event.eventCode %></title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .details-box { border: 1px solid #ddd; padding: 20px; max-width: 600px; background-color: #f9f9f9; }
+        .detail-item { margin-bottom: 15px; font-size: 16px; }
+        .detail-label { font-weight: bold; width: 120px; display: inline-block; color: #333; }
+        .actions { margin-top: 20px; }
+        .btn { padding: 10px 15px; text-decoration: none; color: white; border: none; cursor: pointer; display: inline-block; font-size: 14px; }
+        .btn-back { background-color: #6c757d; }
+        .btn-edit { background-color: #ffc107; color: black; }
+        .btn-delete { background-color: #dc3545; color: white; }
+        .btn:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+    <h1>Event Details</h1>
+    <p>Operator: <%= name %></p>
+
+    <div class="details-box">
+        <div class="detail-item">
+            <span class="detail-label">Event Code:</span>
+            <span><%= event.eventCode %></span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Event Name:</span>
+            <span><%= event.title %></span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Category:</span>
+            <span><%= event.category %></span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Venue:</span>
+            <span><%= event.venue %></span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Start Time:</span>
+            <span><%= new Date(event.startAt).toLocaleString() %></span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Capacity:</span>
+            <span><%= event.capacity %> people</span>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Current Status:</span>
+            <span><%= event.status %></span>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="/events" class="btn btn-back">Back to List</a>
+        <a href="/events/<%= event.eventCode %>/edit" class="btn btn-edit">Edit Event</a>
+
+        <form action="/events/<%= event.eventCode %>/delete" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete <%= event.eventCode %>? This action cannot be undone!');">Delete Event</button>
+        </form>
+    </div>
+</body>
+</html>

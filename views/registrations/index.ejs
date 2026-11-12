@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Registration Records</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn-cancel { color: white; background-color: red; padding: 5px 10px; border: none; cursor: pointer; }
+        .status-confirmed { color: green; font-weight: bold; }
+        .status-cancelled { color: gray; text-decoration: line-through; }
+    </style>
+</head>
+<body>
+    <h1>Hello, <%= name %>! This is your registration record.</h1>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="/events">Back to Event List</a> | 
+        <a href="/dashboard">Back to Dashboard</a>
+    </div>
+
+    <% if (registrations.length === 0) { %>
+        <p>You haven't registered for any events yet.</p>
+    <% } else { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Code</th>
+                    <th>Registration Time</th>
+                    <th>Registration Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% registrations.forEach(function(reg) { %>
+                    <tr>
+                        <td><%= reg.eventCode %></td>
+                        <td><%= new Date(reg.registeredAt).toLocaleString() %></td>
+                        <td>
+                            <% if (reg.status === 'Confirmed') { %>
+                                <span class="status-confirmed">Confirmed</span>
+                            <% } else { %>
+                                <span class="status-cancelled">Cancelled</span>
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if (reg.status === 'Confirmed') { %>
+                                <form action="/registrations/<%= reg._id %>/cancel" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn-cancel" onclick="return confirm('Are you sure you want to cancel this registration?');">Cancel Registration</button>
+                                </form>
+                            <% } else { %>
+                                <span>-</span>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+</html>
